@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyCars</string>
+    <string name="app_alfa_romeo">Alfa Romeo</string><string name="button_send">Send</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="lab_car_name">Car Name</string>
+    <string name="hint_car_name">a name for identification</string>
+    <string name="lab_manufacture">Manufacture</string>
+    <string name="lab_model">Model</string>
+    <string name="action_save">Save</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_car">Add Car</string>
+    <string name="lab_year">Year</string>
+    <string name="lab_mileage">Mileage</string><string name="lab_color">Color</string><string name="lab_notes">Notes</string>
+</resources>
