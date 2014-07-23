@@ -9,7 +9,6 @@ import android.widget.EditText;
 import com.myapps.MyCars.data.CarDbHelper;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,8 +61,8 @@ public class AddCarActivity extends Activity {
         final String manufacture = manufactureText != null ? manufactureText.getText().toString() : "";
         final String model = modelText != null ? modelText.getText().toString() : "";
         final long mileage = mileageText != null ? Long.parseLong(mileageText.getText().toString()) : 0;
-        final String color = colorText != null ? colorText.getText().toString(): "";
-        final String notes = notesText != null ? notesText.getText().toString(): "";
+        final String color = colorText != null ? colorText.getText().toString() : "";
+        final String notes = notesText != null ? notesText.getText().toString() : "";
 
         final CarDbHelper dbHelper = new CarDbHelper(this);
         dbHelper.addCar(carName, year, manufacture, model, mileage, color, notes);

@@ -28,6 +28,7 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:id="@+id/year" android:layout_column="2"/>
 
     </TableRow>
@@ -70,6 +71,7 @@
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:id="@+id/mileage" android:layout_column="2"/>
     </TableRow>
     <TableRow

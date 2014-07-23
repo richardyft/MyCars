@@ -1,24 +1,20 @@
 package com.myapps.MyCars;
 
-import android.app.ListActivity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.*;
-import android.widget.AbsListView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleCursorAdapter;
-import com.myapps.MyCars.data.CarContract;
-import com.myapps.MyCars.data.CarDbHelper;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import com.myapps.MyCars.adapter.TabPagesAdapter;
 
-public class MainActivity extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-
-
-    SimpleCursorAdapter adapter;
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    private ViewPager viewPager;
+    private ActionBar actionBar;
+    private String[] tabs = {"Fill-up", "Service", "Statistics"};
 
     /**
      * Called when the activity is first created.
@@ -26,27 +22,34 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-        ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT,
-                AbsListView.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        progressBar.setIndeterminate(true);
-        getListView().setEmptyView(progressBar);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        TabPagesAdapter tabPagesAdapter = new TabPagesAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabPagesAdapter);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-        root.addView(progressBar);
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name).setTabListener(this));
+        }
 
-        String[] fromColumns = {CarContract.CarEntry.CAR_NAME,
-                CarContract.CarEntry.MANUFACTURE};
-        int[] toViews = {android.R.id.text1, android.R.id.text2};
-        adapter = new SimpleCursorAdapter(this,
-                android.R.layout.two_line_list_item, null,
-                fromColumns,
-                toViews, 0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-        setListAdapter(adapter);
+            @Override
+            public void onPageSelected(int position) {
+                actionBar.setSelectedNavigationItem(position);
+            }
 
-        this.getLoaderManager().initLoader(0, null, this);
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
     }
 
 
@@ -72,30 +75,20 @@ public class MainActivity extends ListActivity implements LoaderManager.LoaderCa
         startActivity(new Intent(this, AddCarActivity.class));
     }
 
-
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // Do something when a list item is clicked
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, null,
-                null, null, null, null) {
-            @Override
-            public Cursor loadInBackground() {
-                return new CarDbHelper(MainActivity.this).getAllCarsCursor();
-            }
-        };
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
+
 }
